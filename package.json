@@ -19,7 +19,9 @@
     "jquery": "^3.3.1"
   },
   "dependencies": {
+    "codemirror": "^5.40.0",
     "express": "^4.16.3",
+    "gulp-open": "^3.0.1",
     "socket.io": "^2.1.1"
   }
 }
