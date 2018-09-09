@@ -4,10 +4,12 @@ var connected_to_io=false;
 
   $('#button_connect').click(function(event) {
     /* Act on the event */
+    if(!connected_to_io){
     username=$('#txt_uname').val();
     socket.emit('user_join', username);
     console.log("button clicked "+username);
     $('#connect_modal').modal("hide");
+    }
   });
 
   /************* codemirror configuration ******************/
@@ -52,8 +54,7 @@ socket.on('roomfull', function(room) {
 socket.on('createdroom', function(room, clientId) {
   console.log('Created room', room);
   initiate = true;
-    connected_to_io=true;
-     $('#connect_comm').html("socket.io Connected")
+   socketIoMsg(true,"socket.io Connected");
  // grabWebCamVideo();
 
 });
@@ -61,8 +62,7 @@ socket.on('createdroom', function(room, clientId) {
 socket.on('joinedroom', function(room, clientId) {
   console.log('This peer has joined room', room);
   initiate = false;
-   connected_to_io=true;
-     $('#connect_comm').html("socket.io Connected")
+   socketIoMsg(true,"socket.io Connected");
   createpeer_connection(initiate, config);
 //  grabWebCamVideo();
 });
@@ -93,8 +93,7 @@ socket.on('message', function(message) {
 // Leaving rooms and disconnecting from peers.
 socket.on('disconnect', function(reason) {
   console.log(`Disconnected: ${reason}.`);
-  connected_to_io=false;
-  $('#connect_comm').html("Connect")
+   socketIoMsg(false,"Connect");
 
 });
 
@@ -168,7 +167,7 @@ peer_conn.onicecandidate = function(event) {
 
 if (initiate) {
   console.log('Creating Data Channel');
-  dataChannel = peer_conn.createDataChannel('photos');
+  dataChannel = peer_conn.createDataChannel('char_data');
   onDataChannelCreated(dataChannel);
 
   console.log('Creating an offer');
@@ -194,11 +193,13 @@ function onDataChannelCreated(channel) {
   console.log('onDataChannelCreated:', channel);
 
   channel.onopen = function() {
+setWebRtcDispMsg("WebRTC Connected datachannel open")
     console.log('CHANNEL opened!!!');
    
   };
 
   channel.onclose = function () {
+    setWebRtcDispMsg("WebRTC  datachannel closed")
     console.log('Channel closed.');
    
   }
@@ -287,6 +288,14 @@ function logError(err) {
      return;
 } 
 
+
+function setWebRtcDispMsg(msg){
+ $('#webrtc_indic').html(msg);
+}
+function socketIoMsg(state,msg){
+ connected_to_io=true;
+     $('#connect_comm').html(msg)
+}
 
 	
 });
