@@ -1,7 +1,7 @@
 $(document).ready(function() {
 var mod_oper_running=false;
 var connected_to_io=false;
-
+var username;
   $('#button_connect').click(function(event) {
     /* Act on the event */
     if(!connected_to_io){
@@ -23,6 +23,7 @@ var connected_to_io=false;
     console.log(''+mod_oper_running);
     if(!mod_oper_running){
     var msg=new Object();
+    msg.sender=username;
     msg.from=obj.from;
     msg.to=obj.to;
     if(obj.text.length==2){
@@ -32,6 +33,7 @@ var connected_to_io=false;
   }
     msg.data='string';
     sendText( JSON.stringify(msg));
+    showMsg( msg);
     console.log(msg);
   }
     //console.log(obj.from);
@@ -242,7 +244,9 @@ function receiveDataFirefoxFactory() {
 
   return function onmessage(event) {
     if (typeof event.data === 'string') {
+
       processMsg(event);
+      
       
     }
     
@@ -254,9 +258,16 @@ function receiveDataFirefoxFactory() {
 */
 function sendText(txt) {
  dataChannel.send(txt);
+
 }
 
-
+function showMsg (data) {
+  console.log(data);
+  if((data.sender)===(username))
+   $("#msg_list").append("<li ><span class=\"badge badge-secondary\">"+data.sender+" </span> : "+data.text+"</li>");
+   else
+    $("#msg_list").append("<li ><span class=\"badge badge-primary\">"+data.sender+" </span> : "+data.text+"</li>");
+}
 
 
 function logError(err) {
@@ -274,6 +285,7 @@ function logError(err) {
   mod_oper_running=true;
       var mod_to=new Object();
       var data=JSON.parse(event.data);
+      showMsg(data);
       mod_to=data.to;
       if(data.text===''){
         editor.replaceRange('',data.from,data.to);

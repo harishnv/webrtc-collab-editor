@@ -15,3 +15,9 @@ $primary-color: #5b5b5b;
   font-size: 24px;
 }
 
+.list-group{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
