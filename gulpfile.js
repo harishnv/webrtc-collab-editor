@@ -30,12 +30,15 @@ gulp.task('browserSync', function() {
       },
    })
 });
-// gulp.task('watchhtml', function() {
-//    gulp.watch("src/*.html").on("change",'html');
-// })
 
+gulp.task('js', function() {
+     gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min.js', 'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/socket.io-client/dist/socket.io.js','src/js/main.js'])
+        .pipe(gulp.dest("./dist/js"))
+        .pipe(browserSync.stream());
+});
 
-gulp.task('default', ['html','styles','browserSync'], function() {
+gulp.task('default', ['html','styles','js','browserSync'], function() {
    
    gulp.watch('src/sass/*.scss',['styles']);
    gulp.watch("src/*.html", ['html',reload]);
