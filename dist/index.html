@@ -15,6 +15,7 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/socket.io.js"></script>
     <script type="text/javascript" src="js/adapter.js"></script>
+    <script type="text/javascript" src="js/codemirror.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
 </head>
 
@@ -28,8 +29,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#" data-toggle="modal" data-target="#exampleModal">Connect </a>
-
+          <a class="nav-item nav-link active" href="#" data-toggle="modal" data-target="#connect_modal">Connect </a>
+           <a id="socket_indic" class="nav-item nav-link active" href="#" >connected </a>
+             <a id="webrtc_indic" class="nav-item nav-link active" href="#" > webrtc not connected </a>
         </div>
       </div>
     </nav>
@@ -39,11 +41,16 @@
   <main role="main">
 
     <div class="container">
-     
+    <div class="row">
+    <div class="col-md-2"></div>
+      <div class="col-md-6"> <textarea id="codemirror-textarea" class="div_editor"></textarea></div>
+      <div class="col-md-4"> </div>
+    </div>
+    
    </div>
 
    <!-- Modal for user connect -->
-   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal fade" id="connect_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

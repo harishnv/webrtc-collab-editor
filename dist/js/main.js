@@ -1,12 +1,44 @@
 $(document).ready(function() {
-
+var mod_oper_running=false;
+var connected_to_io=false;
 
   $('#button_connect').click(function(event) {
     /* Act on the event */
     username=$('#txt_uname').val();
     socket.emit('user_join', username);
     console.log("button clicked "+username);
+    $('#connect_modal').modal("hide");
   });
+
+  /************* codemirror configuration ******************/
+
+  var code = $("#codemirror-textarea")[0];
+  var editor = CodeMirror.fromTextArea(code, {
+    lineNumbers : true,
+    mode: 'application/x-httpd-php'
+  });
+  editor.on("change", function(instance,obj){
+    console.log(''+mod_oper_running);
+    if(!mod_oper_running){
+    var msg=new Object();
+    msg.from=obj.from;
+    msg.to=obj.to;
+    if(obj.text.length==2){
+      msg.text='\n';
+    }else{
+    msg.text=obj.text[0];
+  }
+    msg.data='string';
+    sendText( JSON.stringify(msg));
+    console.log(msg);
+  }
+    //console.log(obj.from);
+});
+
+
+
+
+
     /*****************  Socket.io code *********************/
     var username;
     var socket = io.connect('http://127.0.0.1:3200');
@@ -14,17 +46,23 @@ $(document).ready(function() {
 socket.on('roomfull', function(room) {
   console.log('this room is full cant connect ' + room);
   // updateRoomURL(ipaddr);
+ 
 });
 
 socket.on('createdroom', function(room, clientId) {
   console.log('Created room', room);
   initiate = true;
+    connected_to_io=true;
+     $('#connect_comm').html("socket.io Connected")
  // grabWebCamVideo();
+
 });
 
 socket.on('joinedroom', function(room, clientId) {
   console.log('This peer has joined room', room);
   initiate = false;
+   connected_to_io=true;
+     $('#connect_comm').html("socket.io Connected")
   createpeer_connection(initiate, config);
 //  grabWebCamVideo();
 });
@@ -55,6 +93,8 @@ socket.on('message', function(message) {
 // Leaving rooms and disconnecting from peers.
 socket.on('disconnect', function(reason) {
   console.log(`Disconnected: ${reason}.`);
+  connected_to_io=false;
+  $('#connect_comm').html("Connect")
 
 });
 
@@ -62,6 +102,13 @@ socket.on('bye', function(room) {
   console.log(`Peer leaving room ${room}.`);
  
 });
+/**
+* Send message to signaling server
+*/
+function sendMessage(message) {
+  console.log('Client sending message: ', message);
+  socket.emit('message', message);
+}
 
     /*******************************************************/
 
@@ -202,12 +249,15 @@ function receiveDataFirefoxFactory() {
 }
 
 /**
-* Send message to signaling server
+* Send message on webrtc datachannel 
 */
-function sendMessage(message) {
-  console.log('Client sending message: ', message);
-  socket.emit('message', message);
+function sendText(txt) {
+ dataChannel.send(txt);
 }
+
+
+
+
 function logError(err) {
   if (!err) return;
   if (typeof err === 'string') {
@@ -218,7 +268,7 @@ function logError(err) {
 }
 
 
-return function processMsg (event) {
+ function processMsg (event) {
   // body...
   mod_oper_running=true;
       var mod_to=new Object();

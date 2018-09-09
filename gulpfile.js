@@ -41,7 +41,7 @@ gulp.task('browserSync', function() {
 
 gulp.task('js', function() {
      gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min.js', 'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/socket.io-client/dist/socket.io.js','src/js/main.js','src/js/adapter.js'])
+      'node_modules/socket.io-client/dist/socket.io.js','src/js/main.js','src/js/adapter.js','node_modules/codemirror-minified/lib/codemirror.js'])
         .pipe(gulp.dest("./dist/js"))
         .pipe(browserSync.stream());
 });
