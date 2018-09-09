@@ -1,51 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
 
-    <title>WebRTC Collab Editor</title>
+  <title>WebRTC Collab Editor</title>
 
-    <!-- Bootstrap core CSS -->
-   <link rel="stylesheet" href="css/style.css"/>
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/socket.io.js"></script>
-  </head>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/style.css"/>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/socket.io.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</head>
 
-  <body>
+<body>
 
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">WebRTC Collab Editor </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Join </a>
-      
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">WebRTC Collab Editor </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="#" data-toggle="modal" data-target="#exampleModal">Connect </a>
+
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <main role="main">
+
+    <div class="container">
+     hello
+   </div>
+
+   <!-- Modal for user connect -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Enter User name</span>
+          </div>
+          <input type="text" id="txt_uname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="button_connect" class="btn btn-primary">Submit</button>
+      </div>
     </div>
   </div>
-</nav>
-     
-    </header>
+</div>
 
-    <main role="main">
 
-      <div class="container">
-      	hello
-      </div>
+</main>
 
-      
 
-    </main>
 
-    
-  
-    
-  </body>
+
+</body>
 </html>
