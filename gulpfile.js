@@ -1,7 +1,7 @@
 var gulp  = require('gulp');
 var gutil = require('gulp-util');
 var os = require('os');
-
+var nodemon = require('gulp-nodemon')
 var open = require('gulp-open');
 var sass = require('gulp-sass');
 
@@ -46,7 +46,16 @@ gulp.task('js', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['html','styles','js','open'], function() {
+
+gulp.task('start', function () {
+  nodemon({
+    script: 'index.js'
+  , ext: 'js html'
+  , env: { 'NODE_ENV': 'development' }
+  })
+})
+
+gulp.task('default', ['html','styles','js','start','open'], function() {
   // gulp.task('default', ['html','styles','js','browserSync'], function() {
    
    gulp.watch('src/sass/*.scss',['styles']);
